@@ -1,0 +1,71 @@
+### PST profile after mole-to-mole conversion
+
+Tox <- read.csv("WHOI/IC8B1_toxicity.csv", header=TRUE)
+
+# Remove molecular weight and TEF
+Tox <- Tox[-c(1,2),]
+names(Tox)[1] <- "Sample"
+
+# Keep extracellular samples
+Tox_extra <- subset(Tox, grepl("Phyto_Supernatant", Sample))
+
+# Molecular weights
+MW_C1C2 <- 475.4
+MW_GTX5 <- 379.4
+MW_GTX2GTX3 <- 395.4
+MW_STX <- 299.29
+
+# C1 -> GTX2
+Tox_extra$GTX2 <- Tox_extra$GTX2 + Tox_extra$C1 * (MW_GTX2GTX3 / MW_C1C2)
+
+# C2 -> GTX3
+Tox_extra$GTX3 <- Tox_extra$GTX3 + Tox_extra$C2 * (MW_GTX2GTX3 / MW_C1C2)
+
+# GTX5 -> STX
+Tox_extra$STX <- Tox_extra$STX + Tox_extra$GTX5 * (MW_STX / MW_GTX5)
+
+head(Tox_extra)
+
+# Remove sulfamated toxins after conversion
+Tox_extra$C1 <- 0
+Tox_extra$C2 <- 0
+Tox_extra$GTX5 <- 0
+
+# Remove sample column
+Profile <- Tox_extra[,-1]
+
+# Average
+Average <- colMeans(Profile)
+
+# SD
+SD <- apply(Profile, 2, sd)
+
+# Final profile
+Final_profile <- data.frame(Toxin=names(Average), Average=Average,SD=SD)
+
+# Remove toxins equal to 0
+Final_profile <- subset(Final_profile, Average != 0)
+
+# Rename toxins
+Final_profile$Toxin[Final_profile$Toxin=="dc.GTX2"] <- "dc.GTX2"
+Final_profile$Toxin[Final_profile$Toxin=="dc.GTX3"] <- "dc.GTX3"
+Final_profile$Toxin[Final_profile$Toxin=="dc.STX"] <- "dc.STX"
+Final_profile$Toxin[Final_profile$Toxin=="NéoSTX"] <- "NEO.STX"
+Final_profile$Toxin[Final_profile$Toxin=="dc.Neo"] <- "dc.NEO"
+
+# Percentage
+Final_profile$Percentage <- Final_profile$Average / sum(Final_profile$Average) * 100
+
+# Round values
+Final_profile$Average <- round(Final_profile$Average, 3)
+Final_profile$SD <- round(Final_profile$SD, 3)
+Final_profile$Percentage <- round(Final_profile$Percentage, 2)
+
+# Show final profile
+Final_profile
+
+# Total PST after conversion
+Total <- rowSums(Profile)
+
+mean(Total)
+sd(Total)
