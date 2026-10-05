@@ -1,0 +1,98 @@
+library(ggpattern)
+library(readxl)
+library(ggplot2)
+library(cowplot)
+library(gridExtra)
+library(Publish)
+library(car)
+library(multcomp)
+library(PMCMRplus)
+library(tibble)
+library(rlang)
+library(gg.gap)
+library(ggbreak) 
+library(patchwork)
+library(plotly)
+library(devtools)
+library(readr)
+library(extrafont)
+library(systemfonts)
+library(tidyr)
+
+
+### Bar plot stacked toxin concentrations Alexandrium IC8B1
+
+Tox <- read.csv("IC8B1_toxicity.csv", header = TRUE)
+
+# Remove molecular weight and TEF
+Tox <- Tox[-c(1,2),]
+names(Tox)[1] <- "Sample"
+
+# Long format
+Tox <- pivot_longer(Tox, cols=-Sample, names_to="Toxin", values_to="Concentration")
+
+#  or extra
+Tox$Condition <- ifelse(grepl("Phyto_Cells", Tox$Sample), "", "Extra")
+
+# Average for each toxin
+Average <- aggregate(Concentration ~ Condition + Toxin, data=Tox, FUN=mean)
+names(Average)[3] <- "Average"
+
+# SD for each toxin
+SD <- aggregate(Concentration ~ Condition + Toxin, data=Tox, FUN=sd)
+names(SD)[3] <- "SD"
+
+# Combine average and SD
+Tox <- merge(Average, SD, by=c("Condition","Toxin"))
+
+# Remove toxins equal to 0
+Tox <- subset(Tox, Average != 0)
+
+# Toxin order
+Tox$Toxin <- factor(Tox$Toxin, levels=c("C1","C2","GTX5","GTX6","dc.GTX3","GTX3","GTX4","STX"))
+
+# 
+Tox_ <- subset(Tox, Condition=="")
+
+# Extra
+Tox_extra <- subset(Tox, Condition=="Extra")
+
+ggsave("IC8B1-PST-profile-.tiff", dpi=600)
+
+
+# Plot 
+
+Total <- sum(Tox_intra$Average)
+Total_SD <- sum(Tox_intra$SD)
+
+ggplot(Tox_intra, aes(fill=Toxin, y=Average, x=Condition))+ 
+  geom_bar(position="stack", stat="identity", width=0.2)+
+  annotate("segment", x=0.9, xend=1.1, y=Total + Total_SD, yend=Total + Total_SD, linewidth=0.7)+
+  annotate("segment", x=1, xend=1, y=Total, yend=Total + Total_SD, linewidth=0.7)+
+  theme_classic()+
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())+
+  scale_fill_manual(values=c('#443A83FF','#A7001E',"#E8AABE","#35B779FF","#8FD744FF","#FDE725FF","#D46F4D")) + 
+  labs(y=expression("Total cellular PSTs (pg cell"^{-1}*")"), x=expression(italic("Alexandrium catenella")~"(IC-8-B1)")) +
+  scale_y_continuous(limits=c(0,40))
+  
+
+ggsave("IC8B1-PST-profile-intra-pg.tiff", dpi=300)
+
+
+# Plot extra
+
+Total <- sum(Tox_extra$Average)
+Total_SD <- sum(Tox_extra$SD)
+
+ggplot(Tox_extra, aes(fill=Toxin, y=Average, x=Condition))+ 
+  geom_bar(position="stack", stat="identity", width=0.2)+
+  annotate("segment", x=0.9, xend=1.1, y=Total + Total_SD, yend=Total + Total_SD, linewidth=0.7)+
+  annotate("segment", x=1, xend=1, y=Total, yend=Total + Total_SD, linewidth=0.7)+
+  theme_classic()+
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())+
+  scale_fill_manual(values=c('#443A83FF','#A7001E',"#E8AABE","#26474E","#35B779FF","#8FD744FF","#FDE725FF","#D46F4D")) + 
+  labs(y=expression("Total extracellular PSTs (pg eq. cell"^{-1}*")"), x=expression(italic("Alexandrium catenella")~"(IC-8-B1)")) +
+  scale_y_continuous(limits=c(0,30))
+
+
+ggsave("IC8B1-PST-profile-extra-pg.tiff", dpi=300)
