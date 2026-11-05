@@ -1,1 +1,42 @@
+#CR animals
 
+setwd('WHOI/') 
+
+# barplot 1 CR
+
+#Ouvrir le fichier Excel
+
+CR<- read.csv("ACR-worms.csv", header = TRUE)
+CR<- read.csv("NCR-worms.csv", header = TRUE)
+CR<- read.csv("CR-ascidians.csv", header = TRUE)
+CR<- read.csv("NCR-ascidians.csv", header = TRUE)
+CR<- read.csv("ACR-anemones.csv", header = TRUE)
+CR<- read.csv("NCR-anemones.csv", header = TRUE)
+
+head(CR)
+
+
+## Clearance worms, tunicates, and sea stars 
+
+#Choisir les facteurs que l'on veut comme facteur ou variable
+
+
+CR$Condition <- factor(CR$Condition, levels = c("Low fed","High fed"))
+CR$Time <- factor(CR$Time)
+# Bar blot c?tes a c?tes 
+
+barplot_CR <-ggplot(data=CR, aes(x=Time, y=Apparent.CR, fill=Condition)) +
+  geom_bar(stat="identity",color="black",width=0.5, position=position_dodge()) +
+  theme_classic()+ ### Theme principal
+  scale_fill_manual(values=c('#EED2EE','#FF746C'))+ # Couleur du graph
+  labs(y=expression("Apparent clearance rate (mL ind."^{-1}*" h"^{-1}*")"), x=expression("Time (h)")) +
+  geom_errorbar(aes(ymin=Apparent.CR-0, ymax=Apparent.CR+SD), width=.2, position=position_dodge(.5))+ # Barres d'erreurs
+  scale_y_continuous(breaks=c(0,1,2,3))+
+  expand_limits(y=c(0,3))
+
+
+barplot_CR
+scatter3d(barplot_CR)
+ggplotly(barplot_CR)
+
+ggsave("Apparent-CR-worms.tiff",dpi=600, width = 6, height = 4, units = c("in"))
