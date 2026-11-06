@@ -1,0 +1,120 @@
+Search 1 = toxins 
+TS=(
+"paralytic shellfish toxin*" OR "paralytic shellfish poison*" OR
+saxitoxin* OR neosaxitoxin* OR gonyautoxin* OR
+"diarrhetic shellfish toxin*" OR "diarrhetic shellfish poison*" OR
+"diarrhoeic shellfish poison*" OR
+"okadaic acid" OR dinophysistoxin* OR pectenotoxin* OR
+"amnesic shellfish toxin*" OR "amnesic shellfish poison*" OR
+"domoic acid" OR
+"neurotoxic shellfish poison*" OR brevetoxin* OR
+ciguatoxin* OR maitotoxin* OR gambierone* OR
+palytoxin* OR ovatoxin* OR
+spirolide* OR
+yessotoxin* OR
+azaspiracid* OR
+gymnodimine* OR gymnodimin* OR
+pinnatoxin* OR pteriatoxin* OR
+karlotoxin* OR karmitoxin* OR prymnesin*
+)
+Search 2 = sea stars 
+TS=(
+starfish OR "sea star*" OR seastar* OR
+Asteroidea OR Asterias OR Pisaster OR
+Pycnopodia OR Patiria OR Asterina OR
+Marthasterias OR Astropecten OR Luidia OR
+Henricia OR Crossaster OR Solaster
+)
+
+Search 3 = worms
+TS=(
+worm* OR polychaet* OR Polychaeta OR
+Annelida OR annelid* OR
+Nereididae OR Nereis OR Alitta OR
+Hediste OR Arenicola OR
+Lumbrineris OR Capitella OR
+Sabellidae OR Spionidae OR
+Nemertea OR nemertean* OR
+Sipuncula OR sipuncul* OR
+Echiura OR echiuran*
+)
+Search 4 = anemones 
+TS=(
+anemone* OR Actiniaria OR
+Actiniidae OR Nematostella OR
+Exaiptasia OR Aiptasia OR
+Anthopleura OR Actinia OR
+Metridium OR Diadumene OR
+Anemonia OR Urticina
+)
+Search 5 = Ascidians
+TS=(
+tunicate* OR ascidian* OR
+Tunicata OR Ascidiacea OR
+Ascidiidae OR
+Ciona OR Styela OR
+Botryllus OR Botrylloides OR
+Didemnum OR Diplosoma OR
+Ascidiella OR Halocynthia OR
+Molgula OR Pyura
+)
+
+Search 6 = crabs
+TS=(
+crab* OR Brachyura OR
+"spider crab*" OR
+Maja OR Maia OR
+Cancer OR Metacarcinus OR
+Carcinus OR Callinectes OR
+Chionoecetes OR
+Portunus OR Scylla OR
+Pseudocarcinus OR
+Homarus OR
+Lithodes OR Paralithodes OR
+Charybdis OR
+Necora OR
+Hyas OR Libinia OR
+Erimacrus OR
+Eriocheir OR
+Menippe OR
+Dungeness
+)
+
+Search 7 = shrimps
+
+TS=(
+shrimp* OR prawn* OR
+Caridea OR caridean* OR
+Penaeoidea OR penaeid* OR
+Penaeidae OR Penaeus OR
+Litopenaeus OR Fenneropenaeus OR
+Marsupenaeus OR
+Palaemon OR Palaemonidae OR
+Palaemonetes OR
+Macrobrachium OR
+Crangon OR Crangonidae OR
+Pandalus OR Pandalidae OR
+Alpheus OR Alpheidae OR
+Lysmata OR
+Pleocyemata
+)
+Search 8 = grazers
+TS=(
+grazer* OR
+gastropod* OR Gastropoda OR
+snail* OR "marine snail*" OR
+periwinkle* OR Littorina OR Littorinidae OR
+Littoraria OR
+limpet* OR Patella OR Patellidae OR
+Lottia OR Cellana OR
+abalone* OR Haliotis OR Haliotidae OR
+chiton* OR Polyplacophora OR
+Trochus OR Tectus OR Turbo OR
+Gibbula OR Phorcus OR Monodonta OR
+Nerita OR Neritidae OR
+OR
+Strongylocentrotus OR
+Paracentrotus OR Arbacia OR
+Diadema OR Echinometra OR
+Tripneustes OR Lytechinus
+)
