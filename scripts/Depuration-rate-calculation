@@ -1,0 +1,43 @@
+## Calculation of depuration rate according to Bricelj and Shumway (1998)
+## Exponential decay equation: Tt = T0 * exp(-lambda * t)
+## Results in d-1
+
+# Tunicate depuration rate
+# Time 0 = end of the 72 h exposure period
+
+depu <- data.frame(
+  Time_days = c(0,0,0,1,1,1,4,4,4,7,7,7),
+  Toxin = c(12.5,13.3,14.1,1.5,1.9,2.4,0,0,0,0,0,0))
+
+# Fit exponential model
+fit <- nls(Toxin ~ T0 * exp(-lambda * Time_days), data=depu, start=list(T0=mean(depu$Toxin[depu$Time_days==0]),lambda=0.5), algorithm="port", lower=c(T0=0,lambda=0))
+
+# Extract parameters
+T0 <- coef(fit)["T0"]
+lambda <- coef(fit)["lambda"]
+
+# Convert to percentage toxin loss per day
+depuration_rate_percentage <- 100 * (1 - exp(-lambda))
+
+# Print results
+cat("Initial toxicity:", T0, "\n")
+cat("Lambda:", lambda, "day^-1\n")
+cat("Depuration rate:", depuration_rate_percentage, "% toxin loss per day\n")
+
+summary(fit)
+confint.default(fit)
+
+# Calculate mean and SD
+depu_mean <- aggregate(Toxin ~ Time_days, data=depu, FUN=mean)
+depu_mean$SD <- aggregate(Toxin ~ Time_days, data=depu, FUN=sd)$Toxin
+
+# Plot observed values and fitted curve
+plot(depu$Time_days,depu$Toxin,xlab="Depuration time (days)",ylab="Toxicity",pch=19,col="grey60",ylim=c(0,max(depu_mean$Toxin+depu_mean$SD)))
+
+# Add mean and SD
+points(depu_mean$Time_days,depu_mean$Toxin,pch=19,cex=1.5)
+arrows(depu_mean$Time_days,pmax(0,depu_mean$Toxin-depu_mean$SD),depu_mean$Time_days,depu_mean$Toxin+depu_mean$SD,angle=90,code=3,length=0.05)
+
+# Add fitted exponential curve
+time_sequence <- seq(min(depu$Time_days),max(depu$Time_days),length.out=100)
+lines(time_sequence,T0*exp(-lambda*time_sequence),col="red",lwd=2)
