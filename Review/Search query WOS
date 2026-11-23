@@ -17,6 +17,7 @@ gymnodimine* OR gymnodimin* OR
 pinnatoxin* OR pteriatoxin* OR
 karlotoxin* OR karmitoxin* OR prymnesin*
 )
+
 Search 2 = sea stars 
 TS=(
 starfish OR "sea star*" OR seastar* OR
@@ -38,6 +39,7 @@ Nemertea OR nemertean* OR
 Sipuncula OR sipuncul* OR
 Echiura OR echiuran*
 )
+
 Search 4 = anemones 
 TS=(
 anemone* OR Actiniaria OR
@@ -47,6 +49,7 @@ Anthopleura OR Actinia OR
 Metridium OR Diadumene OR
 Anemonia OR Urticina
 )
+
 Search 5 = Ascidians
 TS=(
 tunicate* OR ascidian* OR
@@ -81,7 +84,6 @@ Dungeness
 )
 
 Search 7 = shrimps
-
 TS=(
 shrimp* OR prawn* OR
 Caridea OR caridean* OR
@@ -102,7 +104,7 @@ Search 8 = grazers
 TS=(
 grazer* OR
 gastropod* OR Gastropoda OR
-snail* OR "marine snail*" OR
+"sea snail*" OR seasnail* OR
 periwinkle* OR Littorina OR Littorinidae OR
 Littoraria OR
 limpet* OR Patella OR Patellidae OR
@@ -112,9 +114,44 @@ chiton* OR Polyplacophora OR
 Trochus OR Tectus OR Turbo OR
 Gibbula OR Phorcus OR Monodonta OR
 Nerita OR Neritidae OR
-OR
-Strongylocentrotus OR
-Paracentrotus OR Arbacia OR
-Diadema OR Echinometra OR
-Tripneustes OR Lytechinus
+
+"sea hare*" OR Aplysia OR Aplysiidae OR
+Aplysiida OR Anaspidea OR Bursatella OR
+Dolabella OR
+
+"sea slug*" OR nudibranch* OR Nudibranchia OR
+opisthobranch* OR Opisthobranchia OR
+Sacoglossa OR Elysia OR Pleurobranchus OR
+
+"sea urchin*" OR urchin* OR Echinoidea OR
+Strongylocentrotus OR Paracentrotus OR
+Arbacia OR Diadema OR Echinometra OR
+Tripneustes OR Lytechinus OR
+Echinus OR Psammechinus OR
+Sphaerechinus OR Heliocidaris OR
+Centrostephanus OR Mesocentrotus OR
+Hemicentrotus OR Evechinus
+)
+
+Search 9 = holothuridae 
+TS=(
+"sea cucumber*" OR
+holothurian* OR holothuroid* OR
+Holothuroidea OR
+Holothuria OR Holothuriidae OR
+Stichopus OR Stichopodidae OR
+Apostichopus OR
+Bohadschia OR Actinopyga OR
+Thelenota OR
+Pearsonothuria OR
+Isostichopus OR
+Parastichopus OR
+Cucumaria OR Cucumariidae OR
+Psolus OR Psolidae OR
+Pentacta OR
+Thyonella OR Thyone OR
+Leptosynapta OR Synapta OR Synaptidae OR
+Chiridota OR
+Paracaudina OR Caudina OR
+Molpadia OR Molpadiidae
 )
